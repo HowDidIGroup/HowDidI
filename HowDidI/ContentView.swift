@@ -223,7 +223,111 @@ struct ChatRowView: View {
 
 struct ProfileView: View {
     var body: some View {
-        Text("Profile Page")
+        NavigationView {
+            VStack(spacing: 20) {
+                // User Avatar
+                Image(systemName: "person.crop.circle.fill")
+                    .resizable()
+                    .frame(width: 100, height: 100)
+                    .clipShape(Circle())
+                    .padding(.top, 40)
+                
+                // Username
+                Text("Username")
+                    .font(.title)
+                    .fontWeight(.bold)
+                
+                // User Bio
+                Text("This is a brief bio about the user. It can be a few lines long and give an overview of who they are.")
+                    .font(.body)
+                    .foregroundColor(.gray)
+                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                
+                // Settings List
+                List {
+                    NavigationLink(destination: AccountSettingsView()) {
+                        HStack {
+                            Image(systemName: "person.crop.circle")
+                                .foregroundColor(.blue)
+                            Text("Account Settings")
+                        }
+                    }
+                    
+                    NavigationLink(destination: NotificationSettingsView()) {
+                        HStack {
+                            Image(systemName: "bell")
+                                .foregroundColor(.blue)
+                            Text("Notification Settings")
+                        }
+                    }
+                    
+                    NavigationLink(destination: PrivacySettingsView()) {
+                        HStack {
+                            Image(systemName: "lock")
+                                .foregroundColor(.blue)
+                            Text("Privacy Settings")
+                        }
+                    }
+                    
+                    NavigationLink(destination: HelpSupportView()) {
+                        HStack {
+                            Image(systemName: "questionmark.circle")
+                                .foregroundColor(.blue)
+                            Text("Help & Support")
+                        }
+                    }
+                    
+                    NavigationLink(destination: AboutView()) {
+                        HStack {
+                            Image(systemName: "info.circle")
+                                .foregroundColor(.blue)
+                            Text("About")
+                        }
+                    }
+                }
+                .listStyle(PlainListStyle())
+                .padding(.top, 20)
+                
+                Spacer()
+            }
+            .navigationBarTitle("Profile", displayMode: .inline)
+        }
+        
+    }
+}
+
+struct AccountSettingsView: View {
+    var body: some View {
+        Text("Account Settings Page")
+            .font(.largeTitle)
+    }
+}
+
+struct NotificationSettingsView: View {
+    var body: some View {
+        Text("Notification Settings Page")
+            .font(.largeTitle)
+    }
+}
+
+struct PrivacySettingsView: View {
+    var body: some View {
+        Text("Privacy Settings Page")
+            .font(.largeTitle)
+    }
+}
+
+struct HelpSupportView: View {
+    var body: some View {
+        Text("Help & Support Page")
+            .font(.largeTitle)
+    }
+}
+
+struct AboutView: View {
+    var body: some View {
+        Text("About Page")
             .font(.largeTitle)
     }
 }
