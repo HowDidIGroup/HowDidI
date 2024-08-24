@@ -63,8 +63,8 @@ struct HomeView: View {
                         
                         // List of applications
                         VStack(alignment: .leading) {
-                            ApplicationView(school: "To Yale", logo: "YaleLogo")
-                            ApplicationView(school: "To Harvard", logo: "HarvardLogo")
+                            ApplicationView(name: "yale", school: "To Yale", logo: "yale_logo")
+                            ApplicationView(name: "harvard", school: "To Harvard", logo: "harvard_logo")
                         }
                         .padding()
                     }
@@ -72,41 +72,6 @@ struct HomeView: View {
                 .navigationBarHidden(true)
             }
         }
-    }
-}
-
-struct ApplicationView: View {
-    let school: String
-    let logo: String
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            HStack {
-                Text(school)
-                    .font(.headline)
-                Spacer()
-                Image(logo)
-                    .resizable()
-                    .frame(width: 40, height: 40)
-            }
-            Text("GradSchool")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            Text("CV, Activities, SoP, and PS...")
-                .font(.subheadline)
-                .foregroundColor(.gray)
-            Text("Quidam alii sunt, et non est in nostra potestate...")
-                .font(.footnote)
-                .foregroundColor(.gray)
-            HStack {
-                Spacer()
-                Text("Limit 10")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
-            }
-            Divider()
-        }
-        .padding(.vertical)
     }
 }
 
