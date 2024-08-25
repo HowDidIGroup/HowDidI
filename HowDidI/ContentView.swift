@@ -61,6 +61,22 @@ struct HomeView: View {
                         .cornerRadius(8)
                         .padding(.horizontal)
                         
+                        // You Might Like Section
+                            VStack(alignment: .leading, spacing: 10) {
+                                                    Text("You Might Like >")
+                                                        .font(.headline)
+                                                        .padding(.horizontal)
+                                                    
+                                                    ScrollView(.horizontal, showsIndicators: false) {
+                                                        HStack(spacing: 20) {
+                                                            ForEach(recommendedSchools, id: \.self) { school in
+                                                                SchoolRecommendationView(school: school)
+                                                            }
+                                                        }
+                                                        .padding(.horizontal)
+                                                    }
+                                                }
+                        
                         // List of applications
                         VStack(alignment: .leading) {
                             ApplicationView(school: "To Yale", logo: "YaleLogo")
@@ -337,3 +353,30 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
+
+struct SchoolRecommendationView: View {
+    let school: School
+    
+    var body: some View {
+        VStack {
+            Image(school.logo)
+                .resizable()
+                .scaledToFit()
+                .frame(width: 60, height: 60)
+            Text(school.name)
+                .font(.caption)
+        }
+    }
+}
+
+struct School: Hashable {
+    var name: String
+    var logo: String
+}
+
+let recommendedSchools = [
+    School(name: "Yale", logo: "YaleLogo"),
+    School(name: "Harvard", logo: "HarvardLogo"),
+    School(name: "UCB", logo: "UCBLogo"),
+    School(name: "UCSD", logo: "UCSDLogo")
+]
