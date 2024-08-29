@@ -56,13 +56,13 @@ struct ApplicationDetailView: View {
         PagingScrollView {
             VStack(spacing: 0) {
                 ResumeView(name: name, school: school, logo: logo)
-                    .frame(height: UIScreen.main.bounds.height)
+                    .frame(height: UIScreen.main.bounds.height * 0.835)
                 
-//                AdviceView(name: name, school: school, logo: logo)
-//                    .frame(height: UIScreen.main.bounds.height)
-//
-//                SOPView(name: name, school: school, logo: logo)
-//                    .frame(height: UIScreen.main.bounds.height)
+                AdviceView(name: name, school: school, logo: logo)
+                    .frame(height: UIScreen.main.bounds.height * 0.835)
+
+                SOPView(name: name, school: school, logo: logo)
+                    .frame(height: UIScreen.main.bounds.height * 0.835)
             }
             .frame(maxWidth: .infinity)
         }
@@ -541,7 +541,7 @@ struct PagingScrollView<Content: View>: UIViewControllerRepresentable {
             hostingController.view.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
             hostingController.view.widthAnchor.constraint(equalTo: scrollView.widthAnchor),
 //            hostingController.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 2.83) // Adjust height for 3 pages
-            hostingController.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 0.83) // Adjust height for 3 pages
+            hostingController.view.heightAnchor.constraint(equalToConstant: UIScreen.main.bounds.height * 2.505) // Adjust height for 3 pages
         ])
         
         return viewController
