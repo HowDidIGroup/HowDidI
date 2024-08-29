@@ -309,7 +309,7 @@ struct SOPView: View {
                         // Question at the top
                         Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
                             .font(.headline)
-                            .padding(.top, 10)
+                            .padding(.top, 15)
                             .padding(.bottom, 10)
 
                         // Additional content
@@ -354,7 +354,7 @@ struct SOPView: View {
                         // Question at the top
                         Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
                             .font(.headline)
-                            .padding(.top, 10)
+                            .padding(.top, 15)
                             .padding(.bottom, 10)
 
                         // Additional content
@@ -399,7 +399,7 @@ struct SOPView: View {
                         // Question at the top
                         Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
                             .font(.headline)
-                            .padding(.top, 10)
+                            .padding(.top, 15)
                             .padding(.bottom, 10)
 
                         // Additional content
