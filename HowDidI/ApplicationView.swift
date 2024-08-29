@@ -55,14 +55,14 @@ struct ApplicationDetailView: View {
     var body: some View {
         PagingScrollView {
             VStack(spacing: 0) {
-//                ResumeView(name: name, school: school, logo: logo)
-//                    .frame(height: UIScreen.main.bounds.height)
-//                
+                ResumeView(name: name, school: school, logo: logo)
+                    .frame(height: UIScreen.main.bounds.height)
+                
 //                AdviceView(name: name, school: school, logo: logo)
 //                    .frame(height: UIScreen.main.bounds.height)
-                
-                SOPView(name: name, school: school, logo: logo)
-                    .frame(height: UIScreen.main.bounds.height)
+//
+//                SOPView(name: name, school: school, logo: logo)
+//                    .frame(height: UIScreen.main.bounds.height)
             }
             .frame(maxWidth: .infinity)
         }
@@ -152,18 +152,17 @@ struct CommentView: View {
                 .font(.subheadline)
                 .fontWeight(.bold)
                 .foregroundColor(.white)
-                .padding(.horizontal, 10)
+                .padding(.horizontal, 8)
                 .padding(.vertical, 7)
                 .background(Color(hex: "1CAD9F"))
                 .cornerRadius(18)
-                .padding(.leading, 8)
+                .padding(.leading, 5)
                 .padding(.top, 0)
             // Comment Text
             Text("Be specific! And never go over stuff casually! Be specific! And never go over stuff casually! Be specific! And never go over stuff casually!")
                 .font(.subheadline)
                 .fontWeight(.bold)
-                .padding(.horizontal, 10)
-                .padding(.leading, 8)
+                .padding(.leading, 5)
         }
         .padding(.top, 10)
     }
@@ -179,7 +178,7 @@ struct AdviceView: View {
             // Title and logo at the top
             HStack(alignment: .top) {
                 VStack(alignment: .leading) {
-                    Text("To \(school)")
+                    Text(school)
                         .font(.title)
                         .fontWeight(.bold)
                     Text("GradSchool/")
@@ -192,60 +191,123 @@ struct AdviceView: View {
                     .fontWeight(.bold)
                     .foregroundColor(.white)
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 7)
-                    .background(Color(hex: "1CAD9F"))
+                    .padding(.vertical, 8)
+                    .background(Color(hex: "2C88D9"))
                     .cornerRadius(18)
-                    .padding(.leading, 8)
+                    .padding(.leading, 5)
+                    .lineLimit(1)
                 Spacer()
                 Image(logo)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
-                    .frame(height: 40) // Adjust the height as per the design
-                    .padding(.trailing, 15) // Adjust the spacing
+                    .frame(height: 60)
             }
-            .padding(.horizontal, 15) // Adjust horizontal padding
-            .padding(.bottom, 10) // Adjust bottom padding
+            .padding(.horizontal, 15)
+            .padding(.bottom, 0)
 
-            // Central Content Area
-            VStack(spacing: 15) {
-                Text("What experiences and academic preparation do you have that are relevant to the degree you’re seeking?")
-                    .font(.headline)
-                    .padding(.horizontal, 15)
+            // Question and Answers
+            VStack(spacing: 0) {
+                TabView {
+                    VStack(alignment: .leading, spacing: 10) {
+                        // Question at the top
+                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                            .font(.headline)
+                            .padding(.top, 15)
+                            .padding(.bottom, 5)
 
-                Rectangle() // Placeholder for the media (image/video)
-                    .fill(Color.gray.opacity(0.3))
-                    .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.width * 0.5)
-                    .cornerRadius(10)
-                    .overlay(
-                        Image(systemName: "play.circle")
+                        // Image between the question and the content
+                        Image("video_img")
                             .resizable()
                             .scaledToFit()
-                            .frame(width: 50, height: 50)
-                            .foregroundColor(.gray)
-                    )
+                            .frame(width: UIScreen.main.bounds.width * 0.9)
+                            .cornerRadius(10)
+                            .padding(.bottom, 3)
 
-                Text("Quidam alii sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis actibus nostris.")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
+                        Spacer() // Pushes the content to the top
+                    }
+                    .frame(maxHeight: .infinity, alignment: .top)
                     .padding(.horizontal, 15)
-            }
-            .padding(.vertical, 20)
-            .frame(width: UIScreen.main.bounds.width * 0.95)
-            .background(Color.white)
-            .cornerRadius(10)
-            .shadow(radius: 5)
+                    .tag(0)
 
-            // Page Indicator
-            HStack {
-                Spacer()
-//                PageControl(currentPage: 0, numberOfPages: 3)
-                Spacer()
+                    VStack(alignment: .leading, spacing: 10) {
+                        // Question at the top
+                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                            .font(.headline)
+                            .padding(.top, 15)
+                            .padding(.bottom, 5)
+
+                        // Image between the question and the content
+                        Image("img")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: UIScreen.main.bounds.width * 0.9)
+                            .cornerRadius(10)
+                            .padding(.bottom, 3)
+
+                        // Additional content
+                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis actibus nostris. Non sunt in nostra potestate corpore bona fama imperii, denique quod non sunt actus.")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .fontWeight(.bold)
+                            .italic()
+
+                        Spacer() // Pushes the content to the top
+                    }
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.horizontal, 15)
+                    .tag(1)
+
+
+                    VStack(alignment: .leading, spacing: 10) {
+                        // Question1
+                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                            .font(.headline)
+                            .padding(.top, 15)
+                            .padding(.bottom, 10)
+                        // Answer1
+                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .fontWeight(.bold)
+                            .italic()
+                        
+                        // Question2
+                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                            .font(.headline)
+                            .padding(.top, 15)
+                            .padding(.bottom, 10)
+                        // Answer2
+                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .fontWeight(.bold)
+                            .italic()
+                        
+                        // Question3
+                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                            .font(.headline)
+                            .padding(.top, 15)
+                            .padding(.bottom, 10)
+                        // Answer3
+                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
+                            .font(.subheadline)
+                            .foregroundColor(.gray)
+                            .fontWeight(.bold)
+                            .italic()
+                        Spacer() // Pushes the content to the top
+                    }
+                    .frame(maxHeight: .infinity, alignment: .top)
+                    .padding(.horizontal, 15)
+                    .tag(2)
+                }
+                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always)) // Dot indicator below comments
             }
-            .padding(.top, 10)
-            .padding(.bottom, 10)
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 1.65) // Adjust height to accommodate comments and spacing
+            .padding(.top, 0)
+            .padding(.bottom, 0)
         }
         .padding(.top, 5)
-        .background(Color(hex: "F2F2F7")) // Light background color to match the design
     }
 }
 
