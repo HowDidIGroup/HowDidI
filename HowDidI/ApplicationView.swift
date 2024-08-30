@@ -209,20 +209,20 @@ struct AdviceView: View {
             VStack(spacing: 0) {
                 TabView {
                     VStack(alignment: .leading, spacing: 10) {
-                        // Question at the top
-                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
-                            .font(.headline)
-                            .padding(.top, 15)
-                            .padding(.bottom, 5)
-
                         // Image between the question and the content
                         Image("video_img")
                             .resizable()
                             .scaledToFit()
                             .frame(width: UIScreen.main.bounds.width * 0.9)
                             .cornerRadius(10)
+                            .padding(.top, 15)
+                            .padding(.bottom, 5)
+                        
+                        // Question at the bottom
+                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                            .font(.headline)
                             .padding(.bottom, 3)
-
+                        
                         Spacer() // Pushes the content to the top
                     }
                     .frame(maxHeight: .infinity, alignment: .top)
