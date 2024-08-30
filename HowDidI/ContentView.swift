@@ -122,9 +122,35 @@ struct LibraryView: View {
 }
 
 struct PostView: View {
+    @State private var titleText: String = ""
+    @State private var bodyText: String = "Add text"
+    @State private var showingImagePicker: Bool = false
+    @State private var inputImage: UIImage?
     var body: some View {
         NavigationView {
             VStack {
+                HStack {
+                    if let inputImage = inputImage {
+                        Image(uiImage: inputImage)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 100, height: 100)
+                    } else {
+                        Button(action: { self.showingImagePicker = true }) {
+                            Image(systemName: "photo.on.rectangle.angled")
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .foregroundColor(.gray)
+                        }
+                    }
+                    Button(action: { self.showingImagePicker = true }) {
+                        Image(systemName: "plus")
+                            .resizable()
+                            .frame(width: 50, height: 50)
+                            .foregroundColor(.blue)
+                    }
+                }
+                .padding()
                 TextField("Title...", text: .constant(""))
                     .padding()
                     .background(Color(.systemGray6))
