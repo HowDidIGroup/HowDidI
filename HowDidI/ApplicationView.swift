@@ -8,6 +8,7 @@
 import Foundation
 import SwiftUI
 import PDFKit
+import AVKit
 
 struct ApplicationView: View {
     let name: String
@@ -75,71 +76,143 @@ struct ResumeView: View {
     let name: String
     let school: String
     let logo: String
+    
+    // Declare the state variables
+    @State private var selectedPDF: String = ""
+    @State private var isImageFullScreen = false
+    @State private var scale: CGFloat = 1.0
+    @State private var offset = CGSize.zero
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Title and logo at the top
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    Text(school)
-                        .font(.title)
-                        .fontWeight(.bold)
-                    Text("GradSchool/")
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
+                // Title and logo at the top
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        Text(school)
+                            .font(.title)
+                            .fontWeight(.bold)
+                        Text("GradSchool/")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.gray)
+                    }
+                    Text("Resume/CV")
                         .font(.subheadline)
                         .fontWeight(.bold)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 7)
+                        .background(Color(hex: "1CAD9F"))
+                        .cornerRadius(18)
+                        .padding(.leading, 8)
+                    Spacer()
+                    Image(logo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 60)
                 }
-                Text("Resume/CV")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 7)
-                    .background(Color(hex: "1CAD9F"))
-                    .cornerRadius(18)
-                    .padding(.leading, 8)
-                Spacer()
-                Image(logo)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 60)
-            }
-            .padding(.horizontal, 15)
-            .padding(.bottom, 0)
+                .padding(.horizontal, 15)
+                .padding(.bottom, 0)
 
-            // PDF Viewer with Dots Indicator Below Comment
-            VStack(spacing: 0) {
-                TabView {
-                    VStack(spacing: 0) {
-                        PDFViewer(pdfName: "yale_resume_1")
-                            .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 0.93 * 1.3)
-                        CommentView()
-                        Spacer().frame(height: 40)
-                    }
-                    .tag(0)
+                // PDF Viewer with Dots Indicator Below Comment
+                VStack(spacing: 0) {
+                    TabView {
+                        VStack(spacing: 0) {
+                            PDFViewer(pdfName: "yale_resume_1", scale: $scale, offset: $offset)
+                                .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 0.93 * 1.3)
+                                .onTapGesture {
+                                    withAnimation {
+                                        selectedPDF = "yale_resume_1"
+                                        isImageFullScreen.toggle()
+                                    }
+                                }
+                            CommentView()
+                            Spacer().frame(height: 40)
+                        }
+                        .tag(0)
 
-                    VStack(spacing: 0) {
-                        PDFViewer(pdfName: "yale_resume_2")
-                            .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 0.93 * 1.3)
-                        CommentView()
-                        Spacer().frame(height: 40)
-                    }
-                    .tag(1)
+                        VStack(spacing: 0) {
+                            PDFViewer(pdfName: "yale_resume_2", scale: $scale, offset: $offset)
+                                .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 0.93 * 1.3)
+                                .onTapGesture {
+                                    withAnimation {
+                                        selectedPDF = "yale_resume_2"
+                                        isImageFullScreen.toggle()
+                                    }
+                                }
+                            CommentView()
+                            Spacer().frame(height: 40)
+                        }
+                        .tag(1)
 
-                    VStack(spacing: 0) {
-                        PDFViewer(pdfName: "yale_resume_3")
-                            .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 0.93 * 1.3)
-                        CommentView()
-                        Spacer().frame(height: 40)
+                        VStack(spacing: 0) {
+                            PDFViewer(pdfName: "yale_resume_3", scale: $scale, offset: $offset)
+                                .frame(width: UIScreen.main.bounds.width * 0.93, height: UIScreen.main.bounds.width * 0.93 * 1.3)
+                                .onTapGesture {
+                                    withAnimation {
+                                        selectedPDF = "yale_resume_3"
+                                        isImageFullScreen.toggle()
+                                    }
+                                }
+                            CommentView()
+                            Spacer().frame(height: 40)
+                        }
+                        .tag(2)
                     }
-                    .tag(2)
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                    .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always)) // Dot indicator below comments
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always)) // Dot indicator below comments
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 1.65)
+                .padding(.top, 0)
+                .padding(.bottom, 0)
             }
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 1.65)
-            .padding(.top, 0)
-            .padding(.bottom, 0)
+            .padding(.top, 5)
+
+            // Full-Screen PDF View
+            if isImageFullScreen {
+                Color.black.opacity(0.8).edgesIgnoringSafeArea(.all)
+                PDFViewer(pdfName: selectedPDF, scale: $scale, offset: $offset)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+//                    .background(Color.black)
+                    .gesture(
+                        MagnificationGesture()
+                            .onChanged { value in
+                                self.scale = value
+                            }
+                            .onEnded { _ in
+                                // Optionally, you can reset the scale here if needed
+                                // self.scale = 1.0
+                            }
+                            .simultaneously(
+                                with: DragGesture()
+                                    .onChanged { gesture in
+                                        self.offset = gesture.translation
+                                    }
+                                    .onEnded { _ in
+                                        self.offset = CGSize.zero
+                                    }
+                            )
+                    )
+
+                // Exit Full-Screen Button
+                VStack {
+                    HStack {
+                        Spacer()
+                        Button(action: {
+                            withAnimation {
+                                isImageFullScreen.toggle()
+                            }
+                        }) {
+                            Image(systemName: "xmark.circle.fill")
+                                .font(.largeTitle)
+                                .foregroundColor(.white)
+                                .padding()
+                        }
+                    }
+                    Spacer()
+                }
+            }
         }
     }
 }
@@ -172,142 +245,268 @@ struct AdviceView: View {
     let name: String
     let school: String
     let logo: String
+    @State private var isMediaFullScreen = false
+    @State private var selectedMedia: String = ""
+    @State private var isVideo: Bool = false
+    @State private var scale: CGFloat = 1.0
+    @State private var offset = CGSize.zero
 
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            // Title and logo at the top
-            HStack(alignment: .top) {
-                VStack(alignment: .leading) {
-                    Text(school)
-                        .font(.title)
-                        .fontWeight(.bold)
-                    Text("GradSchool/")
+        ZStack {
+            VStack(alignment: .leading, spacing: 0) {
+                // Title and logo at the top
+                HStack(alignment: .top) {
+                    VStack(alignment: .leading) {
+                        Text(school)
+                            .font(.title)
+                            .fontWeight(.bold)
+                        Text("GradSchool/")
+                            .font(.subheadline)
+                            .fontWeight(.bold)
+                            .foregroundColor(.gray)
+                    }
+                    Text("Advice")
                         .font(.subheadline)
                         .fontWeight(.bold)
-                        .foregroundColor(.gray)
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 8)
+                        .background(Color(hex: "2C88D9"))
+                        .cornerRadius(18)
+                        .padding(.leading, 5)
+                        .lineLimit(1)
+                    Spacer()
+                    Image(logo)
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(height: 60)
                 }
-                Text("Advice")
-                    .font(.subheadline)
-                    .fontWeight(.bold)
-                    .foregroundColor(.white)
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 8)
-                    .background(Color(hex: "2C88D9"))
-                    .cornerRadius(18)
-                    .padding(.leading, 5)
-                    .lineLimit(1)
-                Spacer()
-                Image(logo)
-                    .resizable()
-                    .aspectRatio(contentMode: .fit)
-                    .frame(height: 60)
-            }
-            .padding(.horizontal, 15)
-            .padding(.bottom, 0)
+                .padding(.horizontal, 15)
+                .padding(.bottom, 0)
 
-            // Question and Answers
-            VStack(spacing: 0) {
-                TabView {
-                    VStack(alignment: .leading, spacing: 10) {
-                        // Image between the question and the content
-                        Image("video_img")
+                // Question and Answers
+                VStack(spacing: 0) {
+                    TabView {
+                        VStack(alignment: .leading, spacing: 10) {
+                            // Video Player replacing the Image
+                            if let url = Bundle.main.url(forResource: "yale_video", withExtension: "mp4") {
+                                VideoPlayer(player: AVPlayer(url: url))
+                                    .scaledToFit()
+                                    .frame(width: UIScreen.main.bounds.width * 0.9)
+                                    .cornerRadius(10)
+                                    .padding(.top, 15)
+                                    .padding(.bottom, 5)
+                                    .onTapGesture {
+                                        withAnimation {
+                                            selectedMedia = "yale_video"
+                                            isVideo = true
+                                            isMediaFullScreen.toggle()
+                                        }
+                                    }
+                            } else {
+                                Text("Video not found")
+                                    .frame(width: UIScreen.main.bounds.width * 0.9, height: UIScreen.main.bounds.width * 0.5)
+                                    .background(Color.gray)
+                                    .cornerRadius(10)
+                                    .padding(.top, 15)
+                                    .padding(.bottom, 5)
+                            }
+
+                            // Question at the bottom
+                            Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                                .font(.headline)
+                                .padding(.bottom, 3)
+                            // Pushes the content to the top
+                            Spacer()
+                        }
+                        .frame(maxHeight: .infinity, alignment: .top)
+                        .padding(.horizontal, 15)
+                        .tag(0)
+
+                        VStack(alignment: .leading, spacing: 10) {
+                            // Question at the top
+                            Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                                .font(.headline)
+                                .padding(.top, 15)
+                                .padding(.bottom, 5)
+
+                            // Image with pinch-to-zoom functionality
+                            Image("img")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: UIScreen.main.bounds.width * 0.9)
+                                .cornerRadius(10)
+                                .padding(.bottom, 3)
+                                .onTapGesture {
+                                    withAnimation {
+                                        selectedMedia = "img"
+                                        isVideo = false
+                                        isMediaFullScreen.toggle()
+                                    }
+                                }
+
+                            // Additional content
+                            Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis actibus nostris. Non sunt in nostra potestate corpore bona fama imperii, denique quod non sunt actus.")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .fontWeight(.bold)
+                                .italic()
+                            // Pushes the content to the top
+                            Spacer()
+                        }
+                        .frame(maxHeight: .infinity, alignment: .top)
+                        .padding(.horizontal, 15)
+                        .tag(1)
+                        
+                        VStack(alignment: .leading, spacing: 10) {
+                            // Question1
+                            Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                                .font(.headline)
+                                .padding(.top, 15)
+                                .padding(.bottom, 10)
+                            // Answer1
+                            Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .fontWeight(.bold)
+                                .italic()
+                            
+                            // Question2
+                            Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                                .font(.headline)
+                                .padding(.top, 15)
+                                .padding(.bottom, 10)
+                            // Answer2
+                            Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .fontWeight(.bold)
+                                .italic()
+                            
+                            // Question3
+                            Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
+                                .font(.headline)
+                                .padding(.top, 15)
+                                .padding(.bottom, 10)
+                            // Answer3
+                            Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
+                                .font(.subheadline)
+                                .foregroundColor(.gray)
+                                .fontWeight(.bold)
+                                .italic()
+                            // Pushes the content to the top
+                            Spacer()
+                        }
+                        .frame(maxHeight: .infinity, alignment: .top)
+                        .padding(.horizontal, 15)
+                        .tag(2)
+                    }
+                    .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
+                    // Dot indicator below comments
+                    .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always))
+                }
+                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 1.65)
+                .padding(.top, 0)
+                .padding(.bottom, 0)
+            }
+            .padding(.top, 5)
+            
+            // Full-Screen Media View
+            if isMediaFullScreen {
+                Color.black.opacity(0.8)
+                    .edgesIgnoringSafeArea(.all) // Covers the entire screen, including the nav bar and status bar
+
+                ZStack {
+                    if isVideo {
+                        // AVPlayer instance
+                        let player = AVPlayer(url: Bundle.main.url(forResource: selectedMedia, withExtension: "mp4")!)
+
+                        // Display video in full screen
+                        VideoPlayer(player: player)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .onAppear {
+                                player.play() // Start playing the video
+                            }
+
+                    } else {
+                        // Display image in full screen with pinch-to-zoom
+                        Image(selectedMedia)
                             .resizable()
                             .scaledToFit()
-                            .frame(width: UIScreen.main.bounds.width * 0.9)
-                            .cornerRadius(10)
-                            .padding(.top, 15)
-                            .padding(.bottom, 5)
-                        
-                        // Question at the bottom
-                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
-                            .font(.headline)
-                            .padding(.bottom, 3)
-                        
-                        Spacer() // Pushes the content to the top
+                            .scaleEffect(scale)
+                            .offset(x: offset.width, y: offset.height)
+                            .gesture(
+                                MagnificationGesture()
+                                    .onChanged { value in
+                                        self.scale = value
+                                    }
+                                    .onEnded { _ in
+                                        // Optionally, you can reset the scale here if needed
+                                        // self.scale = 1.0
+                                    }
+                                    .simultaneously(
+                                        with: DragGesture()
+                                            .onChanged { gesture in
+                                                self.offset = gesture.translation
+                                            }
+                                            .onEnded { _ in
+                                                self.offset = CGSize.zero
+                                            }
+                                    )
+                            )
                     }
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.horizontal, 15)
-                    .tag(0)
 
-                    VStack(alignment: .leading, spacing: 10) {
-                        // Question at the top
-                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
-                            .font(.headline)
-                            .padding(.top, 15)
-                            .padding(.bottom, 5)
-
-                        // Image between the question and the content
-                        Image("img")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: UIScreen.main.bounds.width * 0.9)
-                            .cornerRadius(10)
-                            .padding(.bottom, 3)
-
-                        // Additional content
-                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis actibus nostris. Non sunt in nostra potestate corpore bona fama imperii, denique quod non sunt actus.")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .fontWeight(.bold)
-                            .italic()
-
-                        Spacer() // Pushes the content to the top
+                    // Exit Full-Screen Button
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Button(action: {
+                                withAnimation {
+                                    isMediaFullScreen.toggle()
+                                }
+                            }) {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.largeTitle)
+                                    .foregroundColor(.white)
+                                    .padding()
+                            }
+                        }
+                        Spacer()
                     }
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.horizontal, 15)
-                    .tag(1)
-
-
-                    VStack(alignment: .leading, spacing: 10) {
-                        // Question1
-                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
-                            .font(.headline)
-                            .padding(.top, 15)
-                            .padding(.bottom, 10)
-                        // Answer1
-                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .fontWeight(.bold)
-                            .italic()
-                        
-                        // Question2
-                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
-                            .font(.headline)
-                            .padding(.top, 15)
-                            .padding(.bottom, 10)
-                        // Answer2
-                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .fontWeight(.bold)
-                            .italic()
-                        
-                        // Question3
-                        Text("What experiences and academic\npreparation do you have that are relevant\nto the degree you're seeking?")
-                            .font(.headline)
-                            .padding(.top, 15)
-                            .padding(.bottom, 10)
-                        // Answer3
-                        Text("Quidam alli sunt, et non est in nostra potestate. Quae omnia in nostra sententia, pursuit, cupiditatem, aversatio, ex quibus in Verbo, quicquid non suis")
-                            .font(.subheadline)
-                            .foregroundColor(.gray)
-                            .fontWeight(.bold)
-                            .italic()
-                        Spacer() // Pushes the content to the top
-                    }
-                    .frame(maxHeight: .infinity, alignment: .top)
-                    .padding(.horizontal, 15)
-                    .tag(2)
                 }
-                .tabViewStyle(PageTabViewStyle(indexDisplayMode: .always))
-                .indexViewStyle(PageIndexViewStyle(backgroundDisplayMode: .always)) // Dot indicator below comments
             }
-            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 1.65) // Adjust height to accommodate comments and spacing
-            .padding(.top, 0)
-            .padding(.bottom, 0)
         }
-        .padding(.top, 5)
+    }
+}
+
+struct VideoPlayerView: UIViewRepresentable {
+    let videoName: String
+
+    func makeUIView(context: Context) -> UIView {
+        let view = UIView()
+
+        // Locate the video file
+        guard let path = Bundle.main.path(forResource: videoName, ofType: "mp4") else {
+            print("Video not found")
+            return view
+        }
+
+        let player = AVPlayer(url: URL(fileURLWithPath: path))
+        let playerLayer = AVPlayerLayer(player: player)
+        playerLayer.videoGravity = .resizeAspect
+        playerLayer.frame = view.bounds
+        playerLayer.masksToBounds = true
+        view.layer.addSublayer(playerLayer)
+
+        player.play()
+
+        return view
+    }
+
+    func updateUIView(_ uiView: UIView, context: Context) {
+        if let playerLayer = uiView.layer.sublayers?.first as? AVPlayerLayer {
+            playerLayer.frame = uiView.bounds
+        }
     }
 }
 
@@ -478,7 +677,9 @@ struct SOPView: View {
 
 struct PDFViewer: UIViewRepresentable {
     let pdfName: String
-    
+    @Binding var scale: CGFloat
+    @Binding var offset: CGSize
+
     func makeUIView(context: Context) -> PDFView {
         let pdfView = PDFView()
         if let path = Bundle.main.path(forResource: pdfName, ofType: "pdf"),
@@ -490,16 +691,17 @@ struct PDFViewer: UIViewRepresentable {
         pdfView.autoScales = true
         
         // Disable scrolling up and down
-         pdfView.displayMode = .singlePage
-         pdfView.displaysAsBook = false
-         pdfView.isUserInteractionEnabled = false
-         pdfView.displayBox = .cropBox
+        pdfView.displayMode = .singlePage
+        pdfView.displaysAsBook = false
         
         return pdfView
     }
     
-    func updateUIView(_ uiView: PDFView, context: Context) {
-        // Update the PDFView if needed
+    func updateUIView(_ pdfView: PDFView, context: Context) {
+        // Apply the scale and offset
+        pdfView.transform = CGAffineTransform.identity
+            .scaledBy(x: scale, y: scale)
+            .translatedBy(x: offset.width, y: offset.height)
     }
 }
 

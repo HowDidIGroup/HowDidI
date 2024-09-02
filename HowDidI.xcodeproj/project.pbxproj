@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3B2B728B2C8674F500D63B4F /* yale_video.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 3B2B728A2C8674F400D63B4F /* yale_video.mp4 */; };
 		3BDDC9F72C7A7EEF000A22E8 /* ApplicationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3BDDC9F62C7A7EEF000A22E8 /* ApplicationView.swift */; };
 		3BDDCA012C7A94FC000A22E8 /* yale_resume_2.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3BDDC9FE2C7A94FC000A22E8 /* yale_resume_2.pdf */; };
 		3BDDCA022C7A94FC000A22E8 /* yale_resume_1.pdf in Resources */ = {isa = PBXBuildFile; fileRef = 3BDDC9FF2C7A94FC000A22E8 /* yale_resume_1.pdf */; };
@@ -18,6 +19,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3B2B728A2C8674F400D63B4F /* yale_video.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = yale_video.mp4; sourceTree = "<group>"; };
 		3BDDC9F62C7A7EEF000A22E8 /* ApplicationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationView.swift; sourceTree = "<group>"; };
 		3BDDC9FE2C7A94FC000A22E8 /* yale_resume_2.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = yale_resume_2.pdf; sourceTree = "<group>"; };
 		3BDDC9FF2C7A94FC000A22E8 /* yale_resume_1.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = yale_resume_1.pdf; sourceTree = "<group>"; };
@@ -70,6 +72,7 @@
 				3BDDC9FF2C7A94FC000A22E8 /* yale_resume_1.pdf */,
 				3BDDC9FE2C7A94FC000A22E8 /* yale_resume_2.pdf */,
 				3BDDCA002C7A94FC000A22E8 /* yale_resume_3.pdf */,
+				3B2B728A2C8674F400D63B4F /* yale_video.mp4 */,
 				DDA5B7602C182D670059762E /* HowDidIApp.swift */,
 				DDA5B7622C182D670059762E /* ContentView.swift */,
 				3BDDC9F62C7A7EEF000A22E8 /* ApplicationView.swift */,
@@ -148,6 +151,7 @@
 			files = (
 				3BDDCA022C7A94FC000A22E8 /* yale_resume_1.pdf in Resources */,
 				DDA5B7682C182D680059762E /* Preview Assets.xcassets in Resources */,
+				3B2B728B2C8674F500D63B4F /* yale_video.mp4 in Resources */,
 				3BDDCA032C7A94FC000A22E8 /* yale_resume_3.pdf in Resources */,
 				3BDDCA012C7A94FC000A22E8 /* yale_resume_2.pdf in Resources */,
 				DDA5B7652C182D680059762E /* Assets.xcassets in Resources */,
