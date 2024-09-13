@@ -205,110 +205,185 @@ struct ChatRowView: View {
 struct ProfileView: View {
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                // User Avatar
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .clipShape(Circle())
-                    .padding(.top, 40)
-                
-                // Username
-                Text("Username")
-                    .font(.title)
-                    .fontWeight(.bold)
-                
-                // User Bio
-                Text("This is a brief bio about the user. It can be a few lines long and give an overview of who they are.")
-                    .font(.body)
-                    .foregroundColor(.gray)
-                    .multilineTextAlignment(.center)
+            VStack(spacing: 10) {
+                HStack(alignment: .center) {
+                    // User Avatar
+                    ZStack {
+                        Image(systemName: "person.crop.circle.fill")
+                            .resizable()
+                            .frame(width: 75, height: 75)
+                            .foregroundColor(.purple)
+                    }
+                    // Greeting and Username
+                    VStack(alignment: .leading, spacing: 5) {
+                        Text("Good Afternoon,")
+                            .font(.title2)
+                        Text("Emilygoodjob")
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                    }
                     .padding(.horizontal)
+                }
+                .padding(.top, 10)
                 
+                Divider()
+                
+                // Balance
+                HStack(spacing: 5) {
+                    ZStack {
+                        Image(systemName: "dollarsign.circle")
+                            .foregroundColor(.white)
+                            .font(.system(size: 30))
+                            .background(Circle().fill(Color(red: 0.15, green: 0.67, blue: 0.65)))
+                    }
+                    Text("19.92")
+                        .font(.title2)
+                }
+                .padding(.horizontal)
+                
+                Divider()
+
                 // Settings List
-                List {
-                    NavigationLink(destination: AccountSettingsView()) {
-                        HStack {
+                VStack(spacing: 1) {
+                    // Account
+                    NavigationLink(destination: AccountView()) {
+                        HStack(spacing: 5) {
                             Image(systemName: "person.crop.circle")
-                                .foregroundColor(.blue)
-                            Text("Account Settings")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 30))
+                            Text("Account")
+                                .font(.title3)
+                                .foregroundColor(.black)
+                            Spacer() // Push the content to the left
                         }
+                        .background(Color.white)
                     }
-                    
-                    NavigationLink(destination: NotificationSettingsView()) {
-                        HStack {
-                            Image(systemName: "bell")
-                                .foregroundColor(.blue)
-                            Text("Notification Settings")
+
+                    // Settings
+                    NavigationLink(destination: SettingView()) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "gearshape.fill")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 30))
+                            Text("Settings")
+                                .font(.title3)
+                                .foregroundColor(.black)
+                            Spacer()
                         }
+                        .padding(.top, 2)
+                        .background(Color.white)
                     }
-                    
-                    NavigationLink(destination: PrivacySettingsView()) {
-                        HStack {
-                            Image(systemName: "lock")
-                                .foregroundColor(.blue)
-                            Text("Privacy Settings")
+
+                    // Membership
+                    NavigationLink(destination: MembershipView()) {
+                        HStack(spacing: 5) {
+                            Image(systemName: "person.crop.circle.badge.checkmark")
+                                .foregroundColor(.gray)
+                                .font(.system(size: 30))
+                            Text("Membership")
+                                .font(.title3)
+                                .foregroundColor(.black)
+                            Spacer()
                         }
-                    }
-                    
-                    NavigationLink(destination: HelpSupportView()) {
-                        HStack {
-                            Image(systemName: "questionmark.circle")
-                                .foregroundColor(.blue)
-                            Text("Help & Support")
-                        }
-                    }
-                    
-                    NavigationLink(destination: AboutView()) {
-                        HStack {
-                            Image(systemName: "info.circle")
-                                .foregroundColor(.blue)
-                            Text("About")
-                        }
+                        .padding(.top, 2)
+                        .background(Color.white)
                     }
                 }
-                .listStyle(PlainListStyle())
-                .padding(.top, 20)
+                .padding(.horizontal) // Correctly placed here
                 
-                Spacer()
+                Divider()
+
+                VStack(spacing: 10) {
+                    // Manuscript Section (Fixed at the top)
+                    HStack(alignment: .center, spacing: 10) {
+                        Text("Manuscript")
+                            .font(.title3)
+                            .bold()
+                        Image(systemName: "magnifyingglass")
+                            .font(.system(size: 25))
+                    }
+                    .padding(.horizontal)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                    // Scrollable content below
+                    ScrollView {
+                        VStack(spacing: 10) {
+                            // Scrollable list of items
+                            HStack(spacing: 10) {
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                            }
+
+                            HStack(spacing: 10) {
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                            }
+
+                            HStack(spacing: 10) {
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                            }
+                            
+                            HStack(spacing: 10) {
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                                RoundedRectangle(cornerRadius: 0)
+                                    .fill(Color.gray.opacity(0.3))
+                                    .frame(height: 115)
+                            }
+                        }
+                        .padding(.horizontal)
+                        .padding(.bottom, 20)
+                        .padding(.top, 5)
+                    }
+                }
             }
-            .navigationBarTitle("Profile", displayMode: .inline)
         }
-        
     }
 }
 
-struct AccountSettingsView: View {
+struct AccountView: View {
     var body: some View {
-        Text("Account Settings Page")
+        Text("Account Page")
             .font(.largeTitle)
     }
 }
 
-struct NotificationSettingsView: View {
+struct SettingView: View {
     var body: some View {
-        Text("Notification Settings Page")
+        Text("Setting Page")
             .font(.largeTitle)
     }
 }
 
-struct PrivacySettingsView: View {
+struct MembershipView: View {
     var body: some View {
-        Text("Privacy Settings Page")
-            .font(.largeTitle)
-    }
-}
-
-struct HelpSupportView: View {
-    var body: some View {
-        Text("Help & Support Page")
-            .font(.largeTitle)
-    }
-}
-
-struct AboutView: View {
-    var body: some View {
-        Text("About Page")
+        Text("Membership Page")
             .font(.largeTitle)
     }
 }
