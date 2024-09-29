@@ -1,0 +1,6 @@
+framework module Pods_HowDidI {
+  umbrella header "Pods-HowDidI-umbrella.h"
+
+  export *
+  module * { export * }
+}
