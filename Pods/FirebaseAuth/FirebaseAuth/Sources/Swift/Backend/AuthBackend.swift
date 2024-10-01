@@ -22,7 +22,7 @@ import Foundation
 #endif
 
 @available(iOS 13, tvOS 13, macOS 10.15, macCatalyst 13, watchOS 7, *)
-protocol AuthBackendRPCIssuer: NSObjectProtocol {
+protocol AuthBackendRPCIssuer {
   /// Asynchronously send a HTTP request.
   /// - Parameter request: The request to be made.
   /// - Parameter body: Request body.
@@ -35,10 +35,10 @@ protocol AuthBackendRPCIssuer: NSObjectProtocol {
 }
 
 @available(iOS 13, tvOS 13, macOS 10.15, macCatalyst 13, watchOS 7, *)
-class AuthBackendRPCIssuerImplementation: NSObject, AuthBackendRPCIssuer {
+class AuthBackendRPCIssuerImplementation: AuthBackendRPCIssuer {
   let fetcherService: GTMSessionFetcherService
 
-  override init() {
+  init() {
     fetcherService = GTMSessionFetcherService()
     fetcherService.userAgent = AuthBackend.authUserAgent()
     fetcherService.callbackQueue = kAuthGlobalWorkQueue
@@ -71,7 +71,7 @@ class AuthBackendRPCIssuerImplementation: NSObject, AuthBackendRPCIssuer {
 }
 
 @available(iOS 13, tvOS 13, macOS 10.15, macCatalyst 13, watchOS 7, *)
-class AuthBackend: NSObject {
+class AuthBackend {
   static func authUserAgent() -> String {
     return "FirebaseAuth.iOS/\(FirebaseVersion()) \(GTMFetcherStandardUserAgentString(nil))"
   }
@@ -109,7 +109,11 @@ class AuthBackend: NSObject {
     request.setValue(Bundle.main.bundleIdentifier, forHTTPHeaderField: "X-Ios-Bundle-Identifier")
     request.setValue(requestConfiguration.appID, forHTTPHeaderField: "X-Firebase-GMPID")
     if let heartbeatLogger = requestConfiguration.heartbeatLogger {
-      request.setValue(heartbeatLogger.headerValue(), forHTTPHeaderField: "X-Firebase-Client")
+      // The below call synchronously dispatches to a queue. To avoid blocking
+      // the shared concurrency queue, `async let` will spawn the process on
+      // a separate thread.
+      async let heartbeatsHeaderValue = heartbeatLogger.headerValue()
+      await request.setValue(heartbeatsHeaderValue, forHTTPHeaderField: "X-Firebase-Client")
     }
     request.httpMethod = requestConfiguration.httpMethod
     let preferredLocalizations = Bundle.main.preferredLocalizations
@@ -139,11 +143,8 @@ protocol AuthBackendImplementation {
 }
 
 @available(iOS 13, tvOS 13, macOS 10.15, macCatalyst 13, watchOS 7, *)
-private class AuthBackendRPCImplementation: NSObject, AuthBackendImplementation {
-  var rpcIssuer: AuthBackendRPCIssuer
-  override init() {
-    rpcIssuer = AuthBackendRPCIssuerImplementation()
-  }
+private class AuthBackendRPCImplementation: AuthBackendImplementation {
+  var rpcIssuer: AuthBackendRPCIssuer = AuthBackendRPCIssuerImplementation()
 
   /// Calls the RPC using HTTP request.
   /// Possible error responses:
