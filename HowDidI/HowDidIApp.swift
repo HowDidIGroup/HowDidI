@@ -4,7 +4,6 @@ import Firebase
 @main
 struct HowDidIApp: App {
     init() {
-        // 尝试手动加载 GoogleService-Info.plist
         if let filePath = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
            let options = FirebaseOptions(contentsOfFile: filePath) {
             FirebaseApp.configure(options: options)
