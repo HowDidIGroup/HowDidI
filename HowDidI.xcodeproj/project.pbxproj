@@ -16,6 +16,7 @@
 		DDA5B7632C182D670059762E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = DDA5B7622C182D670059762E /* ContentView.swift */; };
 		DDA5B7652C182D680059762E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDA5B7642C182D680059762E /* Assets.xcassets */; };
 		DDA5B7682C182D680059762E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DDA5B7672C182D680059762E /* Preview Assets.xcassets */; };
+		DDFD92D12CABEB69003D334E /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3BDB71C12CAA02C400A21734 /* GoogleService-Info.plist */; };
 		F4BFE2DA38E5CBBAFA8812DD /* Pods_HowDidI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D3D7CF5320C33318CDC24CF /* Pods_HowDidI.framework */; };
 /* End PBXBuildFile section */
 
@@ -183,6 +184,7 @@
 				3BDDCA032C7A94FC000A22E8 /* yale_resume_3.pdf in Resources */,
 				3BDDCA012C7A94FC000A22E8 /* yale_resume_2.pdf in Resources */,
 				DDA5B7652C182D680059762E /* Assets.xcassets in Resources */,
+				DDFD92D12CABEB69003D334E /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

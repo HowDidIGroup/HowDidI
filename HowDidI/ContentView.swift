@@ -418,8 +418,8 @@ struct School: Hashable {
 }
 
 let recommendedSchools = [
-    School(name: "Yale", logo: "YaleLogo"),
-    School(name: "Harvard", logo: "HarvardLogo"),
+    School(name: "Yale", logo: "yale_logo"),
+    School(name: "Harvard", logo: "harvard_logo"),
     School(name: "UCB", logo: "UCBLogo"),
     School(name: "UCSD", logo: "UCSDLogo")
 ]
